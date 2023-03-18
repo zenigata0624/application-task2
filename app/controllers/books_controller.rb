@@ -3,6 +3,7 @@ class BooksController < ApplicationController
  before_action :correct_user, only: [:edit,:update]
 
   def show
+    @new_book = Book.new
     @book = Book.find(params[:id])
     @user = User.find_by(id: @book.user_id)
     
@@ -18,7 +19,7 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
     @book.user_id = current_user.id
     if @book.save
-      redirect_to book_path(@book), success: "You have created book successfully."
+      redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @user = current_user
       @books = Book.all
